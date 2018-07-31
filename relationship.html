@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+       <title>关系图谱</title>
+   </head>
+   <body style="height: 100%; margin: 0">
+       
+       <form class="form-inline" id="form1" role="form" onsubmit="return sub()">
+        <h6 style="float: left;letter-spacing: 4.7px">节点搜索：</h6>
+        <input type="text" style="width: 500px" class="form-control" name="name" placeholder="节点名">
+        <button type="submit" class="btn btn-info">搜索</button>
+       </form>
+       <form class="form-inline" id="form2" role="form" onsubmit="return sub2()">
+        <h6 style="float: left; letter-spacing: 4.7px">层次搜索：</h6>
+        <input type="text" style="width: 248px" class="form-control" name="name" placeholder="节点名">
+        <input type="text" style="width: 248px" class="form-control" name="layer" placeholder="层次">
+        <button type="submit" class="btn btn-info">搜索</button>
+       </form>
+       <form class="form-inline" id="form3" role="form" onsubmit="return sub3()">
+        <h6 style="float: left;">最短路径搜索：</h6>
+        <input type="text" style="width: 248px" class="form-control" name="source" placeholder="源节点">
+        <input type="text" style="width: 248px" class="form-control" name="target" placeholder="目的节点">
+        <button type="submit" class="btn btn-info">搜索</button>
+       </form>
+       <form class="form-inline" id="form4" role="form" onsubmit="return sub4()">
+        <button type="submit" class="btn btn-info">返回全部节点</button>
+       </form>
+       
+       <div id="container" style="height: 100%;width:100%;float:left">
+           
+       </div>
+       <div id="cloud" class="panel panel-default" style="width:35%;float:left;display:none">
+            <div class="panel-body">
+                <img id = "clouding" src=""  style="height:480px; width:640px; "/>
+            </div>
+        </div>
+        
+        <!-- 新 Bootstrap 核心 CSS 文件 -->
+       <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+ 
+        <!-- 可选的Bootstrap主题文件（一般不使用） -->
+       
+ 
+        <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+       <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+ 
+        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+       <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+       <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="dataTool.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+var newData = []; //用来存放被收起的某节点的子节点
+var seriesData = [];
+var orignalData = [];
+var clickIndex = null;
+class Dictionary {
+
+    constructor() {
+        this.items = {}
+    }
+
+    set(key, value) {
+        this.items[key] = value
+    }
+
+    get(key) {
+        return this.items[key]
+    }
+
+    remove(key) {
+        delete this.items[key]
+    }
+
+    getkeys() {
+        return Object.keys(this.items)
+    }
+
+    
+    getvalues() {
+
+        /*
+        也可以使用ES7中的values方法
+        return Object.values(this.items)
+        */
+
+        // 在这里我们通过循环生成一个数组并输出
+        return Object.keys(this.items).reduce((r, c, i) => {
+            r.push(this.items[c])
+            return r
+        }, [])
+    }
+}
+class GraphAdjlist{
+    constructor(){
+        this.nodes = [];
+        this.adjlist = new Dictionary();
+    }
+    addNodes(n){
+        this.nodes.push(n);
+        this.adjlist.set(n,[]);
+    }
+    addLinks(n1,n2){
+        this.adjlist.get(n1).push(n2);
+    }
+}
+var graphAdj = new GraphAdjlist();
+option = null;
+app.title = '力引导布局';
+var flag = false;
+myChart.showLoading();
+$.get('data/Army.gexf', function (xml) {
+    myChart.hideLoading();
+
+    var graph = echarts.dataTool.gexf.parse(xml);
+    var categories = [];
+    for (var i = 0; i < 9; i++) {
+        categories[i] = {
+            name: '类目' + i
+        };
+    }
+    var num = 0
+    graph.nodes.forEach(function (node) {
+        node.itemStyle = null;
+        node.symbolSize = 15;
+        node.name = node.user_name+"\n(@"+node.screen_name+")";
+        node.value = node.symbolSize;
+        //node.category = node.attributes.modularity_class;
+        //node.category = Math.floor(num/50);
+        // console.log(node.category);
+        // num = num + 1;
+        // Use random x, y
+        node.x = node.y = null;
+        node.draggable = true;
+        seriesData.push(node);
+        orignalData.push(node);
+        
+    });
+    
+    option = {
+        title: {
+            text: 'Twitter Relationship',
+            subtext: 'Default layout',
+            top: 'bottom',
+            left: 'right'
+        },
+        tooltip: {
+            trigger: 'item',
+            enterable:true,
+            formatter: function (params){
+                if(params.dataType == "node"){
+                return "<span style=\"color: red; font-weight: bold; font-size: 14px\">用户信息</span><br />用户名："+params.data.screen_name+"<br />昵称："+params.data.user_name+"<br />注册时间："+params.data.join_time+"<br />主页："+params.data.homepage+"<br /><span style=\"width:356px; word-break:break-all;\">简介："+params.data.description+"</span><br />位置："+params.data.location+"<br />点赞数："+params.data.favourites_count+"<br />粉丝数："+params.data.followers_count+"<br />关注数："+params.data.following_count+"<br />推文数："+params.data.statuses_count+"<br />是否认证："+params.data.verify;
+                
+                }
+            },
+            backgroundColor:"rgba(245, 245, 245, 0.8)", 
+            borderWidth: 1,
+            borderColor: '#ccc',
+            padding: 10,
+            textStyle:{
+                fontSize: 12,
+                color: '#000',
+            },
+            
+            extraCssText:'width:360px; white-space:normal; word-wrap:break-word; word-break:break-all; ',
+
+        },
+        /*legend: [{
+            // selectedMode: 'single',
+            data: categories.map(function (a) {
+                return a.name;
+            })
+        }],*/
+        animation: false,
+        series : [
+            {
+                name: 'Les Miserables',
+                type: 'graph',
+                layout: 'force',
+                edgeSymbol: ['', 'arrow'],
+                //focusNodeAdjacency: true,
+                //symbol: 'image://img/martin.jpg',
+                lineStyle : { 
+                    //==========关系边的公用线条样式。
+                    normal:{
+                        color : 'rgba(56,94,15,0.6)',
+                        width : '0.5',
+                        type : 'solid', //线的类型 ‘solid‘（实线）‘dashed‘（虚线）‘dotted‘（点线）
+                        curveness : 0, //线条的曲线程度，从0到1
+                        opacity : 1
+                        // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。默认0.5
+                    }
+                },  
+                
+                
+                data: seriesData,
+                links: graph.links,
+                categories: categories,
+                roam: true,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'bottom',
+                        fontSize:10,
+                        color: 'rgba(0,0,0,0.9)'
+                    },
+                    
+                },
+                force: {
+                    repulsion: 100
+                }
+            }
+        ]
+    };
+
+    myChart.setOption(option);
+    
+    myChart.on('click', function (params) {
+        console.log(params);
+        if(params.dataType == "node"){
+            $("#container").css("width","65%");
+            $("#cloud").show();
+            $("#clouding").attr("src","wc_image/"+params.data.screen_name+".jpg");
+            myChart.dispatchAction({
+                type: 'focusNodeAdjacency',
+                seriesName: 'Les Miserables',
+                dataIndex: params.dataIndex
+            });
+            clickIndex = params.dataIndex; 
+            flag = true;
+            
+        }
+        
+        
+    });
+    
+    $("canvas").click(function(e){
+        console.log(flag);
+        if(flag == true){
+            $("#cloud").hide();
+            myChart.dispatchAction({
+                type: 'unfocusNodeAdjacency',
+                seriesName: 'Les Miserables',
+                dataIndex: clickIndex
+            });
+            flag = false;
+        }
+    }
+    );
+
+    graph.nodes.forEach(function(node){
+        graphAdj.addNodes(node.screen_name);
+    });
+    graph.links.forEach(function(link){
+        graphAdj.addLinks(link.source,link.target);
+    });
+    console.log(graphAdj);
+    
+    
+}, 'xml');;
+var layerNodes = new Set();
+function layerSearch(node,layer){
+    var nextNodes = [];
+    layerNodes.add(node);
+    nextNodes = graphAdj.adjlist.get(node);
+    if (layer != 0 && nextNodes.length != 0) {
+        layer = layer - 1;
+        for (var i = 0; i < nextNodes.length; i++) {
+            layerSearch(nextNodes[i],layer);
+        }
+    }else{
+        return false
+    }
+
+}
+function shortestPath(node1,node2){
+    var label = new Map();
+    var mindis = new Map();
+    var preNode = new Map();
+    if (node1 == node2) {return [node1];}
+    for (var i = 0; i < graphAdj.nodes.length; i++) {
+        label.set(graphAdj.nodes[i],false);
+
+        for (var j = 0; j < graphAdj.adjlist.get(node1).length; j++) {
+
+            if(graphAdj.adjlist.get(node1)[j] == graphAdj.nodes[i]){
+                
+                mindis.set(graphAdj.nodes[i],1);
+                preNode.set(graphAdj.nodes[i],node1);
+                break;
+            }else{
+                mindis.set(graphAdj.nodes[i],Infinity);
+            }
+        }
+    }
+    for(var node of mindis){
+        if(node[1] == 1){
+            console.log(node);
+        }
+
+    }
+    console.log(mindis.get(node2));
+
+    label.set(node1,true);
+    mindis.set(node1,0);
+    var near = null;
+
+    for (var i = 1; i < graphAdj.nodes.length; i++) {
+        var min = Infinity;
+        for (var j = 0; j < graphAdj.nodes.length; j++) {
+            var node = graphAdj.nodes[j];
+            if(label.get(node) == false && mindis.get(node) < min){
+                min = mindis.get(node);
+                near = node;
+            }
+        }
+
+        label.set(near,true);
+        for(var k = 0; k < graphAdj.nodes.length; k++){
+            var node = graphAdj.nodes[k];
+            for(var m = 0; m < graphAdj.adjlist.get(near).length; m++){
+                if(graphAdj.adjlist.get(near)[m] == node){
+                    var tmp = 1 + min;
+                    break;
+                }else{
+                    var tmp = Infinity;
+                }
+            }
+            if(label.get(node) == false && tmp < mindis.get(node)){
+                mindis.set(node,tmp);
+                preNode.set(node,near);
+            }
+        }
+    }
+
+    console.log(preNode);
+
+    var path = [];
+    var node = node2;
+    if(preNode.has(node2)){
+        while(true){
+            path.push(node);
+            if(node == node1){
+                break;
+            }
+            node = preNode.get(node);
+        }
+    }
+    return path;
+}
+function sub(){
+    var t = $("#form1").serializeArray();
+    var searchname = t[0].value;
+    var option = myChart.getOption();
+    console.log(option);
+    nodeData = option.series[0].data;
+    var index = null;
+
+    
+
+
+    for (var i = 0; i < nodeData.length; i++) {
+        if (nodeData[i].screen_name == searchname) {
+            index = i;
+            
+        }
+    }
+    if (index != null){
+        myChart.dispatchAction({
+                type: 'focusNodeAdjacency',
+                seriesName: 'Les Miserables',
+                dataIndex: index
+            });
+        clickIndex = index;
+        flag = true;
+    }else{
+        alert("该用户不存在");
+    }
+    return false;
+}
+function sub2(){
+    var t = $("#form2").serializeArray();
+    var searchname = t[0].value;
+    var layer = parseInt(t[1].value);
+    var option = myChart.getOption();
+    console.log(layer);
+    if (searchname == "") {
+        alert("未填入节点名");
+        return false;
+    }
+    if(isNaN(layer)){
+        alert("未填入层数");
+        return false;
+    }
+    layerSearch(searchname,layer);
+    console.log(layerNodes);
+    newData = [];
+    for (var nodeName of layerNodes) {
+     for (var j = 0; j < orignalData.length; j++) {
+         if (orignalData[j].screen_name == nodeName) {
+                newData.push(orignalData[j]);
+         }
+     }
+    }
+
+    option.series[0].data = newData;
+    layerNodes = new Set();
+    console.log(layerNodes);
+    myChart.setOption(option,true);
+    return false;
+
+
+}
+function sub3(){
+    var t = $("#form3").serializeArray();
+    var source = t[0].value;
+    var target = t[1].value;
+    var option = myChart.getOption();
+    
+    var path = shortestPath(source,target);
+    if(path.length == 0){
+        alert("两点间不存在路径");
+        
+    }else{
+        var pathNode = [];
+        for (var i = 0; i < path.length; i++) {
+            for (var j = 0; j < orignalData.length; j++) {
+                if (orignalData[j].screen_name == path[i]) {
+                        pathNode.push(orignalData[j]);
+                }
+            }
+        }
+        option.series[0].data = pathNode;
+        myChart.setOption(option,true);
+    }
+    return false;
+
+
+}
+function sub4(){
+    var option = myChart.getOption();
+    option.series[0].data = orignalData;
+    myChart.setOption(option,true);
+    return false;
+}
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script> 
+       
+        
+   </body>
+</html>

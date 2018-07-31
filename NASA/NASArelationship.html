@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+	   <title>人物关系分析</title>
+   </head>
+   <body style="height: 100%; margin: 0">
+	
+       <div id="container" style="height:100%;width:100%; float:left" ></div>
+		
+       <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+	   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+app.title = '力引导布局';
+
+myChart.showLoading();
+$.get('les-miserables.gexf', function (xml) {
+    myChart.hideLoading();
+
+    var graph = echarts.dataTool.gexf.parse(xml);
+    var categories = [];
+    for (var i = 0; i < 9; i++) {
+        categories[i] = {
+            name: '类目' + i
+        };
+    }
+    graph.nodes.forEach(function (node) {
+        node.itemStyle = null;
+        node.symbolSize = 10;
+        node.value = node.symbolSize;
+        node.category = node.attributes.modularity_class;
+        // Use random x, y
+        node.x = node.y = null;
+        node.draggable = true;
+    });
+option = {
+    title: {
+        text: ''
+    },
+    tooltip: {
+		trigger: 'item',
+		enterable:true,
+		formatter: function (params){
+			console.log(params);
+			if(params.dataType == "edge"){
+				return params.data.content;
+			}
+		},
+		extraCssText:'width:300px; white-space:normal; word-wrap:break-word; word-break:break-all; ',
+	},
+    animationDurationUpdate: 1500,
+    animationEasingUpdate: 'quinticInOut',
+    label: {
+        normal: {
+            show: true,
+            textStyle: {
+                fontSize: 10
+            },
+        }
+    },
+    series: [
+
+        {
+            type: 'graph',
+            layout: 'force',
+            symbolSize: 35,
+            focusNodeAdjacency: true,
+            roam: true,
+            categories: [{
+                name: '1',
+                itemStyle: {
+                    normal: {
+                        color: "#66CDAA",
+                    }
+                }
+            }, {
+                name: '2',
+                itemStyle: {
+                    normal: {
+                        color: "#FF7735",
+                    }
+                }
+            }, {
+                name: '3',
+                itemStyle: {
+                    normal: {
+                        color: "#33CCFC",
+                    }
+                }
+            }],
+            label: {
+                normal: {
+                    show: true,
+                    textStyle: {
+                        fontSize: 12
+                    },
+                }
+            },
+            force: {
+                repulsion: 350
+            },
+            edgeSymbolSize: [20, 50],
+            edgeLabel: {
+                normal: {
+                    show: true,
+                    textStyle: {
+                        fontSize: 12
+                    },
+                    formatter: "{c}"
+                }
+            },
+            data: [{ //0
+                name: 'NASA',
+                category: 2,
+                draggable: true,
+            }, { //1 
+                name: 'Jim Bridenstine',
+                category: 2,
+                draggable: true,
+            }, { //2
+                name: 'POLITICOLive',
+                category: 1,
+                draggable: true
+            }, { //3
+                name: 'NASA_Astronauts',
+                category: 1,
+                draggable: true
+            }, { //4
+                name: 'Astro_Zach',
+                category: 1,
+                draggable: true
+            }, { //5
+                name: 'AstroAcaba',
+                category: 1,
+                draggable: true
+            }, { //6
+                name: 'Astro_Sabot',
+                category: 1,
+                draggable: true
+            }, { //7
+                name: 'DukeEnergy',
+				category: 1,
+                draggable: true
+            }, { //8
+                name: 'DE_Randy',
+                category: 1,
+                draggable: true
+            }, { //9
+                name: 'DE_LeeF',
+                category: 1,
+                draggable: true
+            }, { //10
+                name: 'NASAEarth',
+                category: 1,
+                draggable: true
+            }, { //11
+                name: 'NASAWebb',
+                category: 1,
+                draggable: true
+            }, { //12
+                name: 'DARPA',
+                category: 2,
+                draggable: true
+            }, { //13
+                name: 'Hackster Pro',
+                category: 1,
+                draggable: true
+            }, { //14
+                name: 'OlegMKS',
+                category: 1,
+                draggable: true
+            }, { //15
+                name: 'Space_Station',
+                category: 1,
+                draggable: true
+            }, { //16
+                name: 'Ricky Arnold',
+                category: 1,
+                draggable: true
+            }, { //17
+                name: 'SpaceX',
+                category: 2,
+                //category: 1,
+                draggable: true
+            }, { //18
+                name: 'CSA_ASC',
+                category: 1,
+                draggable: true
+            }, { //19
+                name: 'Astro_Ricky',
+                category: 1,
+                draggable: true
+            }, { //20
+                name: 'BAESystemsInc',
+                category: 1,
+                draggable: true
+            }, { //21
+                name: 'UArkResearch',
+                category: 1,
+                draggable: true
+            }, { //22
+                name: 'Dynetics',
+                category: 1,
+                draggable: true
+            }],
+            links: [{
+                source: 0,
+                target: 1,
+                //category: 0,
+                value: 'Administrator',
+				content: '(Jim Bridenstine, Administrator, NASA): 13th Administrator of @NASA. Husband. Father. Veteran. (link: https://www.nasa.gov/about/highlights/bridenstine-biography.html)',
+            }, {
+                source: 1,
+                target: 2,
+                value: 'hosting',
+				content: '(Jim Bridenstine, hosting, POLITICOLive): Great conversation with #POLITICOSpace tonight. Thank you @POLITICOLive for hosting me!',
+            }, {
+                source: 1,
+                target: 3,
+                value: 'asked',
+				content: '(Jim Bridenstine, asked, NASA_Astronauts): This week I asked @NASA_Astronauts your questions! Check out this @Twitter moment to hear their answers.',
+            }, {
+                source: 3,
+                target: 4,
+                value: 'asked',
+				content: '(Astro_Zach, asked, NASA_Astronauts): Have you ever wondered what astronauts experience during launch? @Astro_Zach asked @NASA_Astronauts this week. Watch their answer below',
+            }, {
+                source: 5,
+                target: 6,
+                value: 'colleagues',
+				content: '(AstroAcaba, colleagues, Astro_Sabot): American heroes @AstroAcaba & @Astro_Sabot, astronauts from Expedition 53-54 to the @Space_Station, stopped by the office this morning. It was an honor to spend time with two of @NASA’s finest!',
+            }, {
+                source: 0,
+                target: 5,
+                value: 'voluntee',
+				content: '(AstroAcaba, voluntee, NASA): NASA astronaut on my 3rd spaceflight. US Marine Corps, Reserve -hydro geologist -peace corps volunteer, my favorite job, math and science teacher.',
+            }, {
+                source: 0,
+                target: 6,
+                value: 'Astronaut',
+				content: '(NASA, astronaut, Astro_Sabot): NASA Astronaut, Flight Engineer for International Space Station Expeditions 53 & 54, Flight Engineer 1 for Союз МС-06, and retired US Army Colonel',
+            }, {
+                source: 2,
+                target: 7,
+                value: 'speaker',
+				content: '(POLITICOLive, speaker, DukeEnergy): We have an exciting group of speakers lined up for this year’s #ProSummit, including Lynn Good, CEO of @DukeEnergy, our presenting sponsor. More: (link: http://politico.com/politicoprosummit18/speakers) politico.com/politicoprosum…',
+            }, {
+                source: 7,
+                target: 8,
+                value: 'spokesperson',
+				content: '(DukeEnergy, spokesperson, DE_Randy): From solar farms to biogas facilities, follow our spokesperson @DE_RandyW for the latest clean energy and emerging technology news.',
+            }, {
+                source: 7,
+                target: 9,
+                value: 'follow',
+				content: '(DukeEnergy, follow, E_LeeF): Live in #OH or #KY? Follow @DE_LeeF for storm updates, company news and behind-the-scenes volunteer pictures',
+            }, {
+                source: 0,
+                target: 10,
+                value: 'belong',
+				content: '(NASA, belong, NASAEarth): Our @NASAEarth observing satellites captured light from the #CountyFire illuminating the night skies of Northern CA on July 1, 2018. The fire, which started the day before, quadrupled in size overnight as strong winds fanned the flames in hot, dry weather: (link: https://go.nasa.gov/2KF6Cnu) go.nasa.gov/2KF6Cnu',
+            }, {
+                source: 0,
+                target: 11,
+                value: 'belong',
+				content: '(NASA, belong, NASAWebb): The Great Red Spot is a gigantic, high-pressure, ancient storm at Jupiters southern hemisphere thats one of the longest lasting in the solar system. Here’s how we will use infrared capabilities of our @NASAWebb telescope to study the swirling mystery: (link: https://go.nasa.gov/2KAJ9Uv) go.nasa.gov/2KAJ9Uv',
+            }, {
+                source: 12,
+                target: 13,
+                value: 'watch',
+				content: '(Hackster Pro, watch, DARPA): Watch @DARPA new wheels go from circular tires to triangular tracks in just a couple of seconds: (link: http://bit.ly/2KhwsgD) bit.ly/2KhwsgD',
+            }, {
+                source: 14,
+                target: 15,
+                value: 'conduct',
+				content: '(OlegMKS, conduct, Space_Station): Ricky Arnold@astro_ricky It may look like we are preparing for #WorldCup football, but @OlegMKS and I are really conducting a test run of SPHERES satellites on @Space_Station.',
+            }, {
+                source: 14,
+                target: 16,
+                value: 'colleagues',
+				content: '(Ricky Arnold, colleagues, OlegMKS): Ricky Arnold@astro_ricky It may look like we are preparing for #WorldCup football, but @OlegMKS and I are really conducting a test run of SPHERES satellites on @Space_Station.',
+            }, {
+                source: 15,
+                target: 17,
+                value: 'attach',
+				content: '(SpaceX, attach, Space_Station): As we wait for the @SpaceX #Dragon to be attached to the station @Space_Station, we answered @dayemak\'s #AskNASA question today, "Is The Docking Procedure Automatic, Manual Or Both?"',
+            }, {
+                source: 17,
+                target: 18,
+                value: 'capture',
+				content: '(CSA_ASC, capture, SpaceX): Commanded the @CSA_ASC #Canadarm2 to reach out and capture the @SpaceX #Dragon as the station orbited over Canada at 6:54am ET today. (link: https://go.nasa.gov/2KDQJKc) go.nasa.gov/2KDQJKc',
+            }, {
+                source: 18,
+                target: 19,
+                value: 'command',
+				content: '(Astro_Ricky, command, CSA_ASC): The @SpaceX #Dragon is holding at 30 meters from station. Next stop is its capture point about 10 meters from the station where @Astro_Ricky will command the @CSA_ASC #Canadarm2 to capture Dragon.  #AskNASA',
+            }, {
+                source: 12,
+                target: 20,
+                value: 'contract',
+				content: '(DARPA, contract, BAESystemsInc): DARPA recently contracted w/ @BAESystemsInc to develop alternate, secure comms networks for coordination among nodes in the event of cyberattack on U.S. power grid. The tech would also quickly isolate targeted systems. The work is part of DARPA\'s RADICS. (link: https://defensesystems.com/articles/2017/04/13/grid.aspx) defensesystems.com/articles/2017/…',
+            }, {
+                source: 12,
+                target: 21,
+                value: 'performer',
+				content: '(DARPA, performer, UArkResearch): From DARPA performer @UArkResearch, a story on "Bubbles and Anti-hedgehogs: Studying the Nanostructures',
+            }, {
+                source: 12,
+                target: 22,
+                value: 'contract',
+				content: '(DARPA, contract, Dynetics): We\'re making progress toward demonstrating airborne launch &amp; recovery of multiple unmanned aerial systems. We\'ve contracted with @Dynetics for Phase 3 of the program, and aim for a full-scale tech demo in late 2019.',
+            }],
+            lineStyle: {
+                normal: {
+                    opacity: 0.9,
+                    width: 1,
+                    curveness: 0,
+                    color:'rgba(0,0,0,0.9)'
+                }
+            }
+        }
+    ]
+};
+
+    myChart.setOption(option);
+}, 'xml');;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+	
+		      
+   </body>
+</html>

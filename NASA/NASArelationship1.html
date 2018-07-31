@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+	   <title>人物关系分析</title>
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+	   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+app.title = '力引导布局';
+
+myChart.showLoading();
+$.get('les-miserables.gexf', function (xml) {
+    myChart.hideLoading();
+
+    var graph = echarts.dataTool.gexf.parse(xml);
+    var categories = [];
+    for (var i = 0; i < 9; i++) {
+        categories[i] = {
+            name: '类目' + i
+        };
+    }
+    graph.nodes.forEach(function (node) {
+        node.itemStyle = null;
+        node.symbolSize = 10;
+        node.value = node.symbolSize;
+        node.category = node.attributes.modularity_class;
+        // Use random x, y
+        node.x = node.y = null;
+        node.draggable = true;
+    });
+option = {
+    title: {
+        text: ''
+    },
+    tooltip: {},
+    animationDurationUpdate: 1500,
+    animationEasingUpdate: 'quinticInOut',
+    label: {
+        normal: {
+            show: true,
+            textStyle: {
+                fontSize: 12
+            },
+        }
+    },
+    series: [
+
+        {
+            type: 'graph',
+            layout: 'force',
+            symbolSize: 45,
+            focusNodeAdjacency: true,
+            roam: true,
+            categories: [{
+                name: '1',
+                itemStyle: {
+                    normal: {
+                        color: "#009800",
+                    }
+                }
+            }, {
+                name: '2',
+                itemStyle: {
+                    normal: {
+                        color: "#4592FF",
+                    }
+                }
+            }, {
+                name: '3',
+                itemStyle: {
+                    normal: {
+                        color: "#3592F",
+                    }
+                }
+            }],
+            label: {
+                normal: {
+                    show: true,
+                    textStyle: {
+                        fontSize: 12
+                    },
+                }
+            },
+            force: {
+                repulsion: 1000
+            },
+            edgeSymbolSize: [4, 50],
+            edgeLabel: {
+                normal: {
+                    show: true,
+                    textStyle: {
+                        fontSize: 10
+                    },
+                    formatter: "{c}"
+                }
+            },
+            data: [{ //0
+                name: 'NASA',
+                draggable: true,
+            }, { //1 
+                name: 'Jim Bridenstine',
+                draggable: true,
+            }, { //2
+                name: 'POLITICOLive',
+                category: 1,
+                draggable: true
+            }, { //3
+                name: 'NASA_Astronauts',
+                category: 1,
+                draggable: true
+            }, { //4
+                name: 'Astro_Zach',
+                category: 1,
+                draggable: true
+            }, { //5
+                name: 'AstroAcaba',
+                category: 1,
+                draggable: true
+            }, { //6
+                name: 'Astro_Sabot',
+                category: 1,
+                draggable: true
+            }, { //7
+                name: 'DukeEnergy',
+                draggable: true
+            }, { //8
+                name: 'DE_Randy',
+                category: 1,
+                draggable: true
+            }, { //9
+                name: 'DE_LeeF',
+                category: 1,
+                draggable: true
+            }, { //10
+                name: 'NASAEarth',
+                category: 1,
+                draggable: true
+            }, { //11
+                name: 'NASAWebb',
+                category: 1,
+                draggable: true
+            }, { //12
+                name: 'DARPA',
+                draggable: true
+            }, { //13
+                name: 'Hackster Pro',
+                category: 1,
+                draggable: true
+            }, { //14
+                name: 'OlegMKS',
+                category: 1,
+                draggable: true
+            }, { //15
+                name: 'Space_Station',
+                category: 1,
+                draggable: true
+            }, { //16
+                name: 'Ricky Arnold',
+                category: 1,
+                draggable: true
+            }, { //17
+                name: 'SpaceX',
+                category: 1,
+                draggable: true
+            }, { //18
+                name: 'CSA_ASC',
+                category: 1,
+                draggable: true
+            }, { //19
+                name: 'Astro_Ricky',
+                category: 1,
+                draggable: true
+            }, { //20
+                name: 'BAESystemsInc',
+                category: 1,
+                draggable: true
+            }, { //21
+                name: 'UArkResearch',
+                category: 1,
+                draggable: true
+            }, { //22
+                name: 'Dynetics',
+                category: 1,
+                draggable: true
+            }],
+            links: [{
+                source: 0,
+                target: 1,
+                //category: 0,
+                value: 'Administrator'
+            }, {
+                source: 1,
+                target: 2,
+                value: 'hosting'
+            }, {
+                source: 1,
+                target: 3,
+                value: 'asked'
+            }, {
+                source: 3,
+                target: 4,
+                value: 'asked'
+            }, {
+                source: 5,
+                target: 6,
+                value: 'colleagues'
+            }, {
+                source: 0,
+                target: 5,
+                value: 'volunteer'
+            }, {
+                source: 0,
+                target: 6,
+                value: 'Astronaut'
+            }, {
+                source: 2,
+                target: 7,
+                value: 'speaker'
+            }, {
+                source: 7,
+                target: 8,
+                value: 'spokesperson'
+            }, {
+                source: 7,
+                target: 9,
+                value: 'follow'
+            }, {
+                source: 0,
+                target: 10,
+                value: 'belong'
+            }, {
+                source: 0,
+                target: 11,
+                value: 'belong'
+            }, {
+                source: 12,
+                target: 13,
+                value: 'belong'
+            }, {
+                source: 14,
+                target: 15,
+                value: 'conduct'
+            }, {
+                source: 14,
+                target: 16,
+                value: 'conduct'
+            }, {
+                source: 15,
+                target: 17,
+                value: 'conduct'
+            }, {
+                source: 17,
+                target: 18,
+                value: 'conduct'
+            }, {
+                source: 18,
+                target: 19,
+                value: 'command'
+            }, {
+                source: 12,
+                target: 20,
+                value: 'contract'
+            }, {
+                source: 12,
+                target: 21,
+                value: 'performer'
+            }, {
+                source: 12,
+                target: 22,
+                value: 'contract'
+            }],
+            lineStyle: {
+                normal: {
+                    opacity: 0.9,
+                    width: 1,
+                    curveness: 0
+                }
+            }
+        }
+    ]
+};
+
+    myChart.setOption(option);
+}, 'xml');;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>

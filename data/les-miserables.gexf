@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gexf xmlns="http://www.gexf.net/1.2draft" version="1.2" xmlns:viz="http://www.gexf.net/1.2draft/viz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd">
+  <meta lastmodifieddate="2014-01-30">
+    <creator>Gephi 0.8.1</creator>
+    <description></description>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static">
+    <attributes class="node" mode="static">
+      <attribute id="modularity_class" title="Modularity Class" type="integer"></attribute>
+    </attributes>
+	
+    <nodes>
+      <node id="0" label="realDonaldTrump">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+		<viz:img_name value="image://img/realDonaldTrump.jpg"> </viz:img_name>
+		<screen_name value="realDonaldTrump"></screen_name>
+		<name value="Donald J. Trump"></name>
+		<join_time value="2009-03-18 13:46:38"></join_time>
+		<homepage value="http://www.Instagram.com/realDonaldTrump"></homepage>
+		<description value="45th President of the United States of America🇺🇸"></description>
+		<location value="Washington, DC"></location>
+		<favourites_count value="25"></favourites_count>
+		<followers_count value="53204284"></followers_count>
+		<following_count value="47"></following_count>
+		<statuses_count value="38100"></statuses_count>
+		<verify value="Ture"></verify>
+      </node>
+      <node id="1" label="VP">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="4.0"></viz:size>
+        <viz:position x="-418.08344" y="446.8853" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+		<viz:img_name value="image://img/VP.jpg"> </viz:img_name>
+      </node>
+	  <node id="2" label="TuckerCarlson">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="4.0"></viz:size>
+        <viz:position x="-418.08344" y="446.8853" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+		<viz:img_name value="image://img/TuckerCarlson.jpg"> </viz:img_name>
+      </node>
+	  <node id="3" label="WhiteHouse">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="4.0"></viz:size>
+        <viz:position x="-418.08344" y="446.8853" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+		<viz:img_name value="image://img/WhiteHouse.jpg"> </viz:img_name>
+      </node>
+	  <node id="4" label="Scavino45">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="4.0"></viz:size>
+        <viz:position x="-418.08344" y="446.8853" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+		<viz:img_name value="image://img/Scavino45.jpg"> </viz:img_name>
+      </node>
+	  <node id="5" label="KellyannePolls">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="4.0"></viz:size>
+        <viz:position x="-418.08344" y="446.8853" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+		<viz:img_name value="image://img/KellyannePolls.jpg"> </viz:img_name>
+      </node>
+	  <node id="6" label="FLOTUS">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="4.0"></viz:size>
+        <viz:position x="-418.08344" y="446.8853" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+		<viz:img_name value="image://img/FLOTUS.jpg"> </viz:img_name>
+      </node>
+	  <node id="7" label="POTUS">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="4.0"></viz:size>
+        <viz:position x="-418.08344" y="446.8853" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+		<viz:img_name value="image://img/POTUS.jpg"> </viz:img_name>
+      </node>
+	  <node id="8" label="SecondLady">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="4.0"></viz:size>
+        <viz:position x="-418.08344" y="446.8853" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+		<viz:img_name value="image://img/SecondLady.jpg"> </viz:img_name>
+      </node>
+	  <node id="9" label="KristinFisher">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="4.0"></viz:size>
+        <viz:position x="-418.08344" y="446.8853" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+		<viz:img_name value="image://img/KristinFisher.jpg"> </viz:img_name>
+      </node>
+	  <node id="10" label="EricRWeinstein">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="4.0"></viz:size>
+        <viz:position x="-418.08344" y="446.8853" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+		<viz:img_name value="image://img/EricRWeinstein.jpg"> </viz:img_name>
+      </node>
+	  <node id="11" label="RosieGray">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="4.0"></viz:size>
+        <viz:position x="-418.08344" y="446.8853" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+		<viz:img_name value="image://img/RosieGray.jpg"> </viz:img_name>
+      </node>
+	  <node id="12" label="GillianHTurner">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="4.0"></viz:size>
+        <viz:position x="-418.08344" y="446.8853" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+		<viz:img_name value="image://img/GillianHTurner.jpg"> </viz:img_name>
+      </node>
+	  <node id="13" label="ScottMGreer">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="4.0"></viz:size>
+        <viz:position x="-418.08344" y="446.8853" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+		<viz:img_name value="image://img/ScottMGreer.jpg"> </viz:img_name>
+      </node>
+	  <node id="14" label="WHNSC">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="4.0"></viz:size>
+        <viz:position x="-418.08344" y="446.8853" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+		<viz:img_name value="image://img/WHNSC.jpg"> </viz:img_name>
+      </node>
+	  <node id="15" label="Cabinet">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="4.0"></viz:size>
+        <viz:position x="-418.08344" y="446.8853" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+		<viz:img_name value="image://img/Cabinet.jpg"> </viz:img_name>
+      </node>
+	  <node id="16" label="GorsuchFacts">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="4.0"></viz:size>
+        <viz:position x="-418.08344" y="446.8853" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+		<viz:img_name value="image://img/GorsuchFacts.jpg"> </viz:img_name>
+      </node>
+	  <node id="17" label="WhiteHouseHstry">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="4.0"></viz:size>
+        <viz:position x="-418.08344" y="446.8853" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+		<viz:img_name value="image://img/WhiteHouseHstry.jpg"> </viz:img_name>
+      </node>
+	  <node id="18" label="BarackObama">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="4.0"></viz:size>
+        <viz:position x="-418.08344" y="446.8853" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+		<viz:img_name value="image://img/BarackObama.jpg"> </viz:img_name>
+      </node>
+    </nodes>
+    <edges>
+      <edge id="0" source="0" target="1">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="1" source="0" target="2">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="2" source="0" target="3">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="3" source="1" target="4">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="4" source="1" target="5">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="5" source="1" target="6">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="6" source="1" target="3">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="7" source="1" target="7">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="8" source="1" target="0">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="9" source="1" target="8">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="10" source="2" target="9">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="11" source="2" target="10">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="12" source="2" target="11">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="13" source="2" target="0">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="14" source="2" target="12">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="15" source="2" target="13">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="16" source="3" target="14">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="17" source="3" target="15">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="18" source="3" target="5">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="19" source="3" target="4">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="20" source="3" target="8">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="21" source="3" target="16">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="22" source="3" target="1">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="23" source="3" target="6">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="24" source="3" target="0">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="25" source="3" target="7">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="26" source="6" target="17">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="27" source="6" target="18">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="28" source="6" target="0">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="29" source="6" target="1">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="30" source="6" target="8">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="31" source="6" target="7">
+        <attvalues></attvalues>
+      </edge>
+    </edges>
+  </graph>
+</gexf>

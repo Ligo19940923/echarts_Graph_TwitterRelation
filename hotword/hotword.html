@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+       <title>人物热词发现</title>
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+	   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+app.title = '力引导布局';
+
+myChart.showLoading();
+$.get('les-miserables.gexf', function (xml) {
+    myChart.hideLoading();
+
+    var graph = echarts.dataTool.gexf.parse(xml);
+    var categories = [];
+    for (var i = 0; i < 9; i++) {
+        categories[i] = {
+            name: '类目' + i
+        };
+    }
+    graph.nodes.forEach(function (node) {
+        node.itemStyle = null;
+        node.symbolSize = 10;
+        node.value = node.symbolSize;
+        node.category = node.attributes.modularity_class;
+        // Use random x, y
+        node.x = node.y = null;
+        node.draggable = true;
+    });
+var legendes = ["推特关键词", "推特关键词","推特关键词","推文账号",];
+var texts = [{"name":"推特关键词","itemStyle":{"normal":{"color":"#2ca4bf"}}},{"name":"推特关键词","itemStyle":{"normal":{"color":"#ff9945"}}},{"name":"推特关键词","itemStyle":{"normal":{"color":"#3ad1c5"}}},{"name":"推文账号","itemStyle":{"normal":{"color":"#aacf44"}}}];
+var listdata = [{"name":"Dawn spacecraft orbit","category":1,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"solar system originated","category":1,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"Australian  American troops","category":1,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"anniversary  mutual defense agreement","category":1,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"Marines  Mongolian","category":1,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"Mateship action","category":1,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"dedicated service members medical","category":1,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"US  celebrate IndependenceDay","category":1,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"CanadianForces Southern California","category":1,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"Indonesian Navy Band ","category":1,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"DeptofDefense","category":3,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"POTUS","category":3,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"Happy Birthday America","category":2,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"Country  GREAT","category":2,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"Prime Minister Mark Rutte","category":2,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"Safeguarding enforcement community ","category":2,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"optimism unemployment","category":2,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"indictment violent racketeering","category":2,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"economy booming tax cuts","category":2,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"President Mexico","category":2,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"Democrats leadership denounce abandon","category":2,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"dedicated service medical staff","category":2,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"NASA","category":3,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"spacecraft shot lasers","category":0,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"dust storm batters Red Planet","category":0,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"launch landing schedule","category":0,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"spectacular Earth images","category":0,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"International Space Station","category":0,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"Jamestown Williamsburg Yorktown","category":0,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"celestial explosions eruptions","category":0,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}},{"name":"American spacecraft","category":0,"label":{"normal":{"show":true,"textStyle":{"color":"#2ca4bf"}}}}];
+
+var links = [{"source":"Dawn spacecraft orbit","target":"DeptofDefense"},{"source":"solar system originated","target":"DeptofDefense"},{"source":"Australian  American troops","target":"DeptofDefense"},{"source":"anniversary  mutual defense agreement","target":"DeptofDefense"},{"source":"Marines  Mongolian","target":"DeptofDefense"},{"source":"Mateship action","target":"DeptofDefense"},{"source":"dedicated service members medical","target":"DeptofDefense"},{"source":"US  celebrate IndependenceDay","target":"DeptofDefense"},{"source":"CanadianForces Southern California","target":"DeptofDefense"},{"source":"Indonesian Navy Band ","target":"DeptofDefense"},{"source":"POTUS","target":"DeptofDefense"}, {"source":"Happy Birthday America","target":"POTUS"},{"source":"Country  GREAT","target":"POTUS"},{"source":"Prime Minister Mark Rutte","target":"POTUS"},{"source":"Safeguarding enforcement community ","target":"POTUS"},{"source":"optimism unemployment","target":"POTUS"},{"source":"indictment violent racketeering","target":"POTUS"},{"source":"economy booming tax cuts","target":"POTUS"},{"source":"President Mexico","target":"POTUS"},{"source":"Democrats leadership denounce abandon","target":"POTUS"},{"source":"dedicated service medical staff","target":"POTUS"},{"source":"POTUS","target":"NASA"},
+
+{"source":"NASA","target":"spacecraft shot lasers"},{"source":"NASA","target":"dust storm batters Red Planet"},{"source":"NASA","target":"launch landing schedule"},{"source":"NASA","target":"spectacular Earth images"},{"source":"NASA","target":"International Space Station"},{"source":"NASA","target":"Jamestown Williamsburg Yorktown"},{"source":"NASA","target":"celestial explosions eruptions"},{"source":"NASA","target":"American spacecraft"}];
+
+var option = {
+        title: {
+            text: ''
+        },
+        legend: {
+            data: legendes
+        },
+        tooltip: {
+            formatter: function (parmes) {
+                if(parmes.data.name){
+                    return legendes[parmes.data.category] +": " + parmes.name;
+                }
+            }
+        },
+        animationDurationUpdate: 300,
+        animationEasingUpdate: 'quinticInOut',
+        series : [
+            {
+                type: 'graph',
+                layout:'force',
+                symbol:'circle',
+                symbolSize:15,
+                roam: true,
+                focusNodeAdjacency:false,
+                legendHoverLink:true,
+                draggable:true,
+                force : {
+                    repulsion :240,
+                    gravity : 0.03,
+                    edgeLength :80,
+                    layoutAnimation : true
+                },
+                categories: texts,
+                label: {
+                    normal: {
+                        show: true,
+                        position:"left",
+                        textStyle:{
+                            color:'#000',
+                            fontSize:'13'
+                        }
+
+                    }
+                },
+                data: listdata,
+                links:links,
+                lineStyle: {
+                    normal: {
+                        width: 1,
+                        color: {
+                            type: 'radial',
+                            x: 0.5,
+                            y: 0.5,
+                            r: 0.5,
+                            globalCoord: false 
+                        }
+
+                    }
+                }
+            }
+        ]
+    };
+
+    myChart.setOption(option);
+}, 'xml');;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>
